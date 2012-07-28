@@ -170,7 +170,7 @@ h1. More Info
 ** ArmstrongJ on GitHub
 ** http://tx0.org/42y
 * Presentation
-** http://jeff.rainbow-100.com/other/pyohio2012
+** http://tx0.org/430
 * Myself
 ** jeff@rainbow-100.com
 ** @fortranjeff on Twitter
