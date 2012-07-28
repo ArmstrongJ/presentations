@@ -1,0 +1,165 @@
+title: An Introduction to Tkinter
+subtitle: A User's Perspective
+author: Jeffrey B. Armstrong
+company: Approximatrix, LLC
+footer: PyOhio
+subfooter: 28 July 2012
+
+h1. Introduction
+
+* Tkinter (or tkinter)
+** Interface to Tcl/Tk
+** The only GUI framework in the Python standard library
+** Simple to use
+* The speaker
+** Casual Tkinter user
+** Some experience with other GUI toolkits
+
+h1. Opinions
+
+* Three types of people here
+** Never used it
+** Use it and Like it
+** Hate it
+
+h1. Why Care?
+
+* Tkinter is part of the Python standard library
+* Lightweight
+* _Good enough_
+** In fact, it can be great!
+
+h1. The Past
+
+* Limited widget set
+* Unweildy _import_
+* Considered ugly
+
+h1. The Present
+
+* Python 3.x
+** Changed to Pythonic namespaces, like _tkinter_
+** Introduced...
+
+h1. Themed Tk
+
+* `ttk` module
+* Makes old Tkinter look pretty
+** Kinda platform-specific...
+
+h1. Getting Started
+
+* Tk operates in "loop" that is transparent to the developer
+* Widgets are assigned parents, which contain other widgets, etc.
+* Layout managers handle widget placement
+* Widgets can have events "bound" to them and respond accordingly
+
+h1. Layout Managers
+
+* Tkinter provides three geometry managers
+** absolute (avoid this)
+** pack
+** grid
+
+h1. pack Layout
+
+* Extremely simple
+* Specify a side
+* Parent sizes itself to minimally fit everything
+* Not particularly flexible for complex layouts
+
+h1. grid Layout
+    
+* Closer to other toolkits
+* Frames are laid out in a grid
+** Resizing can be handled via _expand_ arguments
+
+h1. Widgets
+
+* tkinter historically provides common, simple widgets
+* Considered a shortcoming 
+** Missing more advanced widgets
+
+h1. Widgets
+
+!{border:0px; float:right; height:14em}widgets.png!
+
+<table style="width: 40%;">
+<tr><td>Button</td><td>Menu</td></tr>
+<tr><td>Frame</td><td>Scale</td></tr>
+<tr><td>Label</td><td>Scrollbar</td></tr>
+<tr><td>Label with Image</td><td>Spinbox</td></tr>
+<tr><td>Listbox</td><td>Text</td></tr></table>
+
+h1. ttk Widgets
+
+* "Overrides" drawing of tkinter widgets 
+** Drawing now handled by theme engine
+* Introduces new, modern widgets
+* Change the "style"
+** _ttk.Style().theme_names()_
+** _ttk.Style().theme_use(style)_
+
+h1. ttk Notebook
+
+* Provides modern paged notebook of frames, accesible via tabs
+* Sensible functionality
+
+h1. ttk Treeview
+
+* Implements tree, list, columned list, etc.
+
+h1. ttk et cetera 
+
+!{border:0px; float:right; height:10em}ttk_widgets.png!
+
+* Combobox
+* CheckButton
+* RadioButton
+* Progressbar
+* Separator
+* Sizegrip 
+
+h1. Canvas
+
+* Allows for simple primitive drawing within a Tk widget
+* Opens up the door for custom widget behavior
+
+h1. Events
+
+* Tkinter events are relatively simple
+** For buttons: _Button(text='Button Name', command=button_callback)_
+* For more complex components, _bind_ method can be used
+
+h1. Standard Dialogs
+
+* File dialog
+** _tkinter.filedialog_ or _tkFileDialog_
+* Color chooser
+** _tkinter.colorchooser_ or _tkColorChooser_
+* Message box
+** _tkinter.messagebox_ or _tkMessageBox_
+
+h1. 2.7 and 3.x
+
+* Python 2.7 and 3.x both contain Themed Tk
+** Cross-version applications
+* Python 2.x has different Tkinter namespace
+** Python 3.x made tkinter slightly more Pythonic
+** Need some ImportError exception magic for cross-version code
+
+h1. Documentation
+
+* Python library documentation on tkinter is arguably sparse
+** ttk, however, is well-documented
+
+* http://www.tkdocs.com/
+** Reference for Tk in Tcl, Ruby, OCaml, and *Python*
+
+h1. Summary
+
+* Tkinter can be pretty sweet!
+** Ships with (almost) all Python ports
+** Now with modern widgets
+* "Ugly" is gone with ttk
+* Easy to build a quick GUI
