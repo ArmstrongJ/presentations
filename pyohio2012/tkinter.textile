@@ -163,3 +163,14 @@ h1. Summary
 ** Now with modern widgets
 * "Ugly" is gone with ttk
 * Easy to build a quick GUI
+
+h1. More Info
+
+* Code 
+** ArmstrongJ on GitHub
+** http://tx0.org/42y
+* Presentation
+** http://jeff.rainbow-100.com/other/pyohio2012
+* Myself
+** jeff@rainbow-100.com
+** @fortranjeff on Twitter
