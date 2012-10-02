@@ -1,0 +1,38 @@
+title: An Introduction to Numerical Computing
+subtitle: Tips, Tricks, and Guidelines
+author: Jeffrey B. Armstrong
+company: Approximatrix, LLC
+footer: Columbus Code Camp
+subfooter: 13 October 2012
+
+h1. Introduction
+
+h1. About the Speaker
+
+h1. Outline
+
+h1. Choosing a Language
+
+h1. Big Ol' Arrays
+
+h1. Know Your Processor
+
+h1. Conditionals
+
+h1. Math and Other Lies
+
+h1. Distrusting Others
+
+h1. Catastrophic Subtractive Cancelation
+
+h1. Parallel Computing
+
+h1. Know Your Operating System
+
+h1. Summary
+
+ * "Trendy" languages might be wrong, or right, it depends...
+ * It's all about the vectors!
+ * Floating point math is easy to get wrong
+ * Parallel computing is hard to get right
+ 
