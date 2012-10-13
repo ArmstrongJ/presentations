@@ -7,32 +7,297 @@ subfooter: 13 October 2012
 
 h1. Introduction
 
+* Different Goals
+* Different Techniques
+* Different Concerns
+
 h1. About the Speaker
+
+* Experience with small-scale numerical computing
+* Worked in numerical computing for ~12 years
+* Still works with C, Fortran, Python, and Ruby regularly
 
 h1. Outline
 
+* Language Choice
+* Central Processing Units
+* Arrays
+* Mathematics
+
 h1. Choosing a Language
 
-h1. Big Ol' Arrays
+1. Speed
+
+2. Ease
+
+3. Maintainability
+
+4. Popularity
+
+h1. Choosing a Language
+
+* Fortran
+** Inherently vectorized
+** Multidimensional arrays
+** Not so popular
+
+h1. Choosing a Language
+
+* Python
+** Interpretted
+** Multidimensional arrays with addons
+** Popular
+
+h1. Choosing a Language
+
+* Ruby
+** Interpretted
+** Multidimensional arrays (Matrix)
+** Not popular for numerics
+
+h1. Choosing a Language
+
+* Bad Choices
+** Fast!
+*** Is it actually faster?  Maintainable?
+** Popular
+*** Is it popular in numerics? Does it make life easier?
+** Obscure
+*** Does anyone use APL? What about Ada?
+** Proprietary Math Packages
+*** Fast? Correct? Upgrade path? Cross-platform? Availability?
 
 h1. Know Your Processor
 
+_Your Commodore 64 is really neato / What kind of chip you got in there, a Dorito?_
+
+p{font-size: 0.7em; text-align: right;}. - "Wierd Al" Yankovic, _It's All About the Pentiums_
+
+h1. Know Your Processor
+
+When writing code, the developer should be aware of his or her CPU.
+
+* How fast is integer and floating point math?
+* Do I have multiple cores?
+* Do I have vector instructions?
+
+h1. Know Your Processor
+
+Integer Math: blazing fast on x86
+
+!{border:0px; height:12em;}dhrystone.svg!
+
+h1. Know Your Processor
+
+Multiple "Cores"
+
+* Use your whole CPU!
+* Understand what a real "CPU core" is:
+** -Hyperthreading-
+** -Cell SPEs-
+** -Your GPU-
+* Other processing elements are extremely useful, but they aren't necessarily general purpose
+
+h1. Know Your Processor
+
+Multiple "Cores"
+
+* Multithreading
+** Easy to do in most languages
+** Look for easy-to-parallelize tasks
+*** Monte-Carlo Simulations
+*** Explicit time-stepping finite difference/volume/etc.
+** Avoid the need for complex synchronization
+
+h1. Know Your Processor
+
+Vector Instructions
+
+* Need double precision
+** Scientific computing usually requires this
+* Program with vectors in mind
+* Compilers are often smarter than you
+
+h1. Big Ol' Arrays
+
+_Nobody will ever have an image bigger than 512 x 512, so a fixed-size array is OK. For best precision, make it an array of doubles._
+
+p{font-size: 0.7em; text-align: right;}. - Static Arrays, _How To Write Unmaintainable Code_, "http://tx0.org/4g5":http://tx0.org/4g5
+
+h1. Big Ol' Arrays
+
+Example: Computational Fluid Dynamics
+
+!{border:0px; float:right; height:11em}cfd.svg!
+
+* Finite Volume techniques
+* Object-oriented!
+
+
+{{{
+class Cell():
+    def __init__(self):
+        self.u0 = 0
+        self.u1 = 0
+        self.v0 = 0
+        self.v1 = 0
+        self.p = 14.697
+        
+    def update(self):
+        pass
+}}}
+
+h1. Big Ol' Arrays
+
+{{{
+class Cell():
+    def __init__(self):
+        self.u0 = 0
+        self.u1 = 0
+        self.v0 = 0
+        self.v1 = 0
+        
+        self.p = 14.697
+        
+    def update(self):
+        pass
+}}}
+
+* Terrible Idea!
+** 1 million cells, requiring 1 million separate memory accesses
+*** No guarantee about memory layout
+** Problem gets worse with getters/setters
+
+h1. Big Ol' Arrays
+
+With arrays, we can: 
+
+* Abuse vector instructions, usually automatically
+* Use pointer arithmetic for fast, in-place operations
+** Vector/matrix interpolation
+
 h1. Conditionals
+
+* Why use conditionals?
+** _Seriously?_
+
+h1. Conditionals
+
+* Why avoid conditionals?
+** An "if" statement isn't vectorized
+** Causes a virtual traffic jam of vectorized operations
+* Explains why highly specialized numerical software isn't flexible
+** Staticly allocated or fixed-size arrays
+** Hard-coded boundary conditions
 
 h1. Math and Other Lies
 
+* Integer math is your friend
+* Example: Calculating a percent complete in a loop
+
+Wrong: `percent = (i / n) * 100.0`
+
+Right: `percent = (i * 100) / n`
+
+h1. Math and Other Lies
+
+* Floating point mathematics is far from perfect
+* IEEE Floating Point (IEEE-754):
+
+p=. _sign * 2 ^exponent^ * mantissa_
+
+<table width="75%">
+<tr><td>Precision</td><td>Sign</td><td>Exponent</td><td>Mantissa</td><td>Bias</td></tr>
+<tr><td>Single</td><td>1 bit</td><td>8 bits</td><td>23 bits</td><td>127</td></tr>
+<tr><td>Double</td><td>1 bit</td><td>11 bits</td><td>52 bits</td><td>1023</td></tr>
+</table>
+
+h1. Math and Other Lies
+
+* IEEE Floating Point (IEEE-754):
+
+p{font-size: 0.9em;}. 0.125 = `2^{(124 - 127)}` = | 0 | 01111100 | 00000000000000000000000 |
+
+p{font-size: 0.9em;}. 0.3 = `2^{(125 - 127)}*1.2` = | 0 | 01111101 | 00110011001100110011010 | != 0.3
+
 h1. Distrusting Others
+
+* Dangerous to blindly accept the output of "black box" math packages
+** Especially dangerous for complex functions/methods
+* Example: SciPy discrete algebraic Riccati equation solver:
+
+p=.  `X = A^T X A - ( A^T X B) (R + B^T X B)^-1 (B^T X A) + Q`
+
+h1. Distrusting Others
+
+{{{
+failed DARE...
+}}}
+
+* Lies!
+
+h1. Distrusting Others
+
+* Simpler example: exponential function
+
+p=. `f(x) = e^x
 
 h1. Catastrophic Subtractive Cancelation
 
-h1. Parallel Computing
+_If I were to get a tatoo, it would say "Catastrophic Subtractive Cancelation."_
 
-h1. Know Your Operating System
+p{font-size: 0.7em; text-align: right;}. - Me
+
+h1. Catastrophic Subtractive Cancelation
+
+* Side effect of floating point mathematics
+* Single precision example:
+
+p=. `5 * 10^8 - 1 * 10^-17 = 4.999999999999999999999999999 * 10^8`
+
+h1. Catastrophic Subtractive Cancelation
+
+* Exponential function
+** Often estimated by Taylor series
+
+`e^x = sum_(n=0)^oo( \frac {x^n} {n!} ) = 1 + x + \frac {x^2} {2!} + \frac {x^3} {3!} + \frac {x^4} {4!} + \frac {x^5} {5!} + ...`
+
+`e^10 = 1 + 10 + \frac 100 2 + \frac 1000 6 + \frac 10000 24 + \frac 100000 120 + ...`
+
+`e^-10 = 1 - 10 + \frac 100 2 - \frac 1000 6 + \frac 10000 24 - \frac 100000 120 + ...`
+
+h1. Catastrophic Subtractive Cancelation
+
+Taylor series results (128 steps):
+
+<table width="90%">
+<tr><td>Method</td><td>exp(-10)</td><td>exp(-100)</td></tr>
+<tr><td> `\frac 1 {e^{|x|}}` </td><td>4.5399929762484861e-05</td><td>3.7349958663065218e-44</td></tr>
+<tr><td> `e^x` </td><td>4.5399929434053169e-05</td><td>-1.4586490453281426e+40</td></tr>
+</table>
+
+h1. Catastrophic Subtractive Cancelation
+
+* Where can this occur?
+** Math libraries
+** Numerical integration
+** Linear algebra
+* How is it avoided?
+** Testing
+*** Unit tests
+*** Sensitivity Analysis
+*** Corroboration
+** Avoidance
+** Knowledge
 
 h1. Summary
 
  * "Trendy" languages might be wrong, or right, it depends...
  * It's all about the vectors!
  * Floating point math is easy to get wrong
- * Parallel computing is hard to get right
  
+h1. More Information
+
+* "http://jeff.rainbow-100.com":http://jeff.rainbow-100.com
+* @fortranjeff on Twitter
+* ArmstrongJ on GitHub
